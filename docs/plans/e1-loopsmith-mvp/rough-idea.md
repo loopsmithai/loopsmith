@@ -1,5 +1,5 @@
 ---
-epic_issue: 178
+epic_issue: 1
 epic_name: loopsmith-mvp
 project: loopsmith
 spine: kit + two reference implementations

@@ -1,4 +1,4 @@
-# ⚠️ Decision needed — design.md / plan.md are out of sync (epic #178)
+# ⚠️ Decision needed — design.md / plan.md are out of sync (epic #1)
 
 *Written 2026-06-22 by the autonomous /loop supervisor. No issues created, nothing
 deleted. All old content is recoverable from git. Story externalization is BLOCKED
@@ -15,7 +15,7 @@ until you resolve this.*
 
 **Current state:** design.md = 690 lines, **0 ACs**, §6/§7/§9–§17 stubbed. `plan.md`
 still references **AC-01…AC-36** and sections (`§1.6`, `§5.8`, `§9`) that no longer
-exist, and an architecture from before PD-16…PD-20. Epic #178 has **no story
+exist, and an architecture from before PD-16…PD-20. Epic #1 has **no story
 sub-issues** yet.
 
 ## Why story creation is blocked

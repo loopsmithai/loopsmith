@@ -1,6 +1,6 @@
 # R-05 — openshift-online/agent-control-plane ("Ambient")
 
-Research for #178 (2026-06-16). Cloned to `projects/agent-control-plane` (shallow) and read from
+Research for #1 (2026-06-16). Cloned to `projects/agent-control-plane` (shallow) and read from
 source. A Red Hat / OpenShift-Online **Kubernetes-native AI automation platform that orchestrates
 agentic sessions**. License: MIT.
 

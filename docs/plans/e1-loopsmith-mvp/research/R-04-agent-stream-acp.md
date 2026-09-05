@@ -1,6 +1,6 @@
 # R-04 — Agent event streams, ACP, and two reference projects
 
-Research for #178 (2026-06-16). Question that triggered it: *do Claude Code / Codex / Gemini CLI
+Research for #1 (2026-06-16). Question that triggered it: *do Claude Code / Codex / Gemini CLI
 support, out of the box today, a structured/attachable agent event stream (turns, tool calls,
 file diffs, tokens, permissions) — and what do two named projects
 ([plum-code-webui](https://github.com/zwaetschge/plum-code-webui),

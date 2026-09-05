@@ -1,7 +1,7 @@
 # `agent-actor-harness` Capability Conformance Contract
 
 > **Base contract for agent-actor hosting.** A more specific variant of the `harness` capability type
-> (design [§4.4](../../178-loopsmith-mvp/design.md#44-the-conformance-engine-and-the-per-type-contracts)):
+> (design [§4.4](../../../plans/e1-loopsmith-mvp/design.md#44-the-conformance-engine-and-the-per-type-contracts)):
 > `agent-actor-harness is-a harness`. The generic `harness` type answers "what drives a coding agent to
 > execute a loop step"; this contract adds what it takes to host a **persistent agent actor** — one that
 > carries an identity, keeps memory, and is equipped with skills — and to move that actor's accumulated self
@@ -31,7 +31,7 @@ facts about who it works with), and a **skill set** (`{name, description, versio
 content; how a given harness stores it natively (files, a database) is the provider's concern.
 
 **Specificity.** `agent-actor-harness` is a variant of the general `harness` type. Per
-[DIS-03](../../178-loopsmith-mvp/design.md#8-design-decisions-living), a requirement for `harness` is satisfied
+[DIS-03](../../../plans/e1-loopsmith-mvp/design.md#8-design-decisions-living), a requirement for `harness` is satisfied
 by an `agent-actor-harness`. A provider MAY declare a still-more-specific variant
 (e.g. `claude-code-harness is-a agent-actor-harness`); that variant MUST satisfy **this** contract in full and
 MAY add behavior, but the extra behavior MUST NOT break any assertion here. That identical, provider-agnostic

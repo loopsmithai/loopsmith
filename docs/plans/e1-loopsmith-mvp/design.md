@@ -1,4 +1,4 @@
-# Design — Loopsmith Kit (MVP, #178)
+# Design — Loopsmith Kit (MVP, #1)
 
 ## 1. Overview
 
@@ -38,7 +38,7 @@ blueprints, and packages that grow the catalogue; in **user mode** (P4), Smith o
 and maintains their setups day-to-day — the developer blueprint ships Smith OOTB, so the same Smith that P1
 trained is the Smith that serves P4 at n-0.
 
-**Personas** (from [features.md](../requirements/features.md#personas)) span the lifecycle: **P1 Loopsmith
+**Personas** (from [features.md](../../features/features.md#personas)) span the lifecycle: **P1 Loopsmith
 Developer** builds the kit and trains Smith; **P2 Family Author** grows new families/blueprints; **P3 Package
 Author** authors the units the catalogue is made of; **P4 End User** stands up, wires, runs, and evolves a
 setup — the primary target and the bulk of the feature set.
@@ -54,7 +54,7 @@ abstraction is real **iff** the difference between two genuinely different setup
 never the software itself, the *kit* ships **no runtime**. The console, Loop Studio, daemon, and cross-context
 digest a person pictures are **not part of the kit's deliverable**; their design lives in
 [R-06](research/R-06-first-product-developer-blueprint.md)/[R-07](research/R-07-first-product-requirements.md).
-The distinction that governs scope is **building a family versus shipping one**: #178 does not *ship* a
+The distinction that governs scope is **building a family versus shipping one**: #1 does not *ship* a
 product, but it **builds and tests two** — a `developer` blueprint Smith onboards through a **web console**
 (the operator's two-context setup: Smith hosted in a *personal* context and a *member of* the *professional*
 one, producing a cross-context digest), and a `simple-assistant` blueprint Smith onboards through a **CLI**.
@@ -80,23 +80,23 @@ design decisions — two different sequences.
 
 ## 2. Requirements Summary
 
-The authoritative requirement text lives in [features.md](../requirements/features.md); this section
+The authoritative requirement text lives in [features.md](../../features/features.md); this section
 references it by series and does not duplicate it. 70 features across 12 series, in lifecycle order:
 
 | Series | Journey | What it governs |
 |--------|---------|-----------------|
-| [BST-01…04](../requirements/features.md#bootstrap--the-apprenticeship-4-features) | Bootstrap | Smith ships credentialed on structure; runs against real systems with an empty catalogue; grows craft via supervised practice; is re-packaged as a conforming agent template. |
-| [PKG-10…04](../requirements/features.md#family-authoring--growing-the-kits-reach-4-features) | Family authoring | Build new families & blueprints with Smith; publish packages (incl. private catalogues); feed structural friction back to the kit. |
-| [PKG-01…09](../requirements/features.md#packages-9-features) | Packages | Declare provides/requires (+ version constraints); unique capability identity; per-type conformance contract; actor⟂loop-template composability; declared coding-agent support; lifecycle hooks; a meta-skill and its application. |
-| [PKG-14…05](../requirements/features.md#discover--choose-5-features) | Discover & choose | Browse blueprints/packages; capability specificity; surface alternatives and unresolved capabilities. |
-| [PKG-19…05](../requirements/features.md#the-consultation--conversational-discovery-with-smith-5-features) | The consultation | Conversational, adaptive discovery; explained recommendations; redirectable proposals; meaningful architecture choices; an approved shared understanding before building. |
-| [PKG-24…09](../requirements/features.md#build-a-setup-with-the-builder-agent-9-features) | Build with the builder | Accept a target & elicit needs; recommend reuse-first + name gaps; author packages, new capability types, and reusable templates; surface friction; gate remediation; report contract violations; discover & absorb new catalogue capabilities without re-shipping. |
-| [PKG-33…09](../requirements/features.md#assemble-wire--verify-9-features) | Assemble, wire & verify | Resolve a sufficient package set; install a blueprint as a unit; install packages into a workspace; assemble; configure/connect sources; base + per-type contract verification gating readiness; installed-inventory; multi-agent placement constraint. |
-| [CNTXT-01…05](../requirements/features.md#contexts-sources--connection-rules-5-features) | Contexts & sources | Connect contexts via sources with configurable access; membership ⟂ access; declared context membership & unification; exactly one home source per context; multi-source contexts. |
-| [CONF-01…11](../requirements/features.md#what-a-conforming-setup-contains-11-features) | The house spec | ≥1 agent, ≥1 loop; tracker-agnostic loops; per-loop workflow; per-agent config; HITL gates; routed operator comms; human↔agent actor parity; multi-context actors; binding equip-check; agent-template declares harness, bound at instantiation. |
-| [PKG-42…05](../requirements/features.md#operate--evolve-a-running-setup-5-features) | Operate & evolve | Evolve a running setup with re-verification; remove packages; version + upgrade/rollback; incremental builder operation; runtime skill-package install. |
-| [LEARN-01…03](../requirements/features.md#smith-gets-better-at-serving-you-3-features) | Per-user growth | Persistent friction/outcome memory; grounded advice citing prior runs; catalogue grows from end-user runs. |
-| [OBS-01](../requirements/features.md#cross-cutting) | Cross-cutting | Adjustable-verbosity observability of Smith and packaging operations from day one. |
+| [BST-01…04](../../features/features.md#bootstrap--the-apprenticeship-4-features) | Bootstrap | Smith ships credentialed on structure; runs against real systems with an empty catalogue; grows craft via supervised practice; is re-packaged as a conforming agent template. |
+| [PKG-10…04](../../features/features.md#family-authoring--growing-the-kits-reach-4-features) | Family authoring | Build new families & blueprints with Smith; publish packages (incl. private catalogues); feed structural friction back to the kit. |
+| [PKG-01…09](../../features/features.md#packages-9-features) | Packages | Declare provides/requires (+ version constraints); unique capability identity; per-type conformance contract; actor⟂loop-template composability; declared coding-agent support; lifecycle hooks; a meta-skill and its application. |
+| [PKG-14…05](../../features/features.md#discover--choose-5-features) | Discover & choose | Browse blueprints/packages; capability specificity; surface alternatives and unresolved capabilities. |
+| [PKG-19…05](../../features/features.md#the-consultation--conversational-discovery-with-smith-5-features) | The consultation | Conversational, adaptive discovery; explained recommendations; redirectable proposals; meaningful architecture choices; an approved shared understanding before building. |
+| [PKG-24…09](../../features/features.md#build-a-setup-with-the-builder-agent-9-features) | Build with the builder | Accept a target & elicit needs; recommend reuse-first + name gaps; author packages, new capability types, and reusable templates; surface friction; gate remediation; report contract violations; discover & absorb new catalogue capabilities without re-shipping. |
+| [PKG-33…09](../../features/features.md#assemble-wire--verify-9-features) | Assemble, wire & verify | Resolve a sufficient package set; install a blueprint as a unit; install packages into a workspace; assemble; configure/connect sources; base + per-type contract verification gating readiness; installed-inventory; multi-agent placement constraint. |
+| [CNTXT-01…05](../../features/features.md#contexts-sources--connection-rules-5-features) | Contexts & sources | Connect contexts via sources with configurable access; membership ⟂ access; declared context membership & unification; exactly one home source per context; multi-source contexts. |
+| [CONF-01…11](../../features/features.md#what-a-conforming-setup-contains-11-features) | The house spec | ≥1 agent, ≥1 loop; tracker-agnostic loops; per-loop workflow; per-agent config; HITL gates; routed operator comms; human↔agent actor parity; multi-context actors; binding equip-check; agent-template declares harness, bound at instantiation. |
+| [PKG-42…05](../../features/features.md#operate--evolve-a-running-setup-5-features) | Operate & evolve | Evolve a running setup with re-verification; remove packages; version + upgrade/rollback; incremental builder operation; runtime skill-package install. |
+| [LEARN-01…03](../../features/features.md#smith-gets-better-at-serving-you-3-features) | Per-user growth | Persistent friction/outcome memory; grounded advice citing prior runs; catalogue grows from end-user runs. |
+| [OBS-01](../../features/features.md#cross-cutting) | Cross-cutting | Adjustable-verbosity observability of Smith and packaging operations from day one. |
 
 **MVP trims cardinality, never concepts.** Every kernel noun and every capability concept is present and
 load-bearing (Q-02/Q-04); the only dial is **cardinality** — "the few, not tens." What is minimal is the
@@ -145,7 +145,7 @@ flowchart LR
 ### 3.2 The kernel model (the five nouns)
 
 Every setup is a graph of five irreducible nouns. They are the vocabulary all contracts and packages are
-written against, and they are what Smith ships credentialed on ([BST-01](../requirements/features.md#bootstrap--the-apprenticeship-4-features)).
+written against, and they are what Smith ships credentialed on ([BST-01](../../features/features.md#bootstrap--the-apprenticeship-4-features)).
 
 | Noun | What it is | Load-bearing rules |
 |------|-----------|--------------------|
@@ -215,11 +215,11 @@ verification against them is what gates a setup as *ready* (PKG-39).
 
 **Contracts are content; the design pins the machinery** ([D-19](#8-design-decisions-living)). The kit
 fixes the contract *format* — a normative RFC 2119 layer + a runnable **test-plan** layer joined by stable
-**assertion IDs** ([`conformance/`](../conformance/README.md)) — and the verification engine (§4.4); the
+**assertion IDs** ([`conformance/`](../../specs/conformance/README.md)) — and the verification engine (§4.4); the
 per-type contracts themselves are authored **incrementally as stories** during MVP (some Smith-assisted at
 bootstrap, BST-02), landing as **catalogue content**, through that machinery — not designed in this doc.
-Two are authored now as worked references — [base-setup](../conformance/contracts/base-setup.md) and
-[work-tracker](../conformance/contracts/work-tracker.md); §4.4 keeps only a non-normative sketch of which
+Two are authored now as worked references — [base-setup](../../specs/conformance/contracts/base-setup.md) and
+[work-tracker](../../specs/conformance/contracts/work-tracker.md); §4.4 keeps only a non-normative sketch of which
 types MVP recognizes.
 
 Verification (PKG-39) checks a candidate setup against the base contract **plus every applicable per-type
@@ -477,7 +477,7 @@ artifacts.
 
 Components are described by **responsibility and contract**, not implementation. The per-capability-type
 **sketch** (§4.4) maps which types MVP recognizes; the normative contracts and their authoring format live in
-[`conformance/`](../conformance/README.md), authored at bootstrap ([D-19](#8-design-decisions-living)).
+[`conformance/`](../../specs/conformance/README.md), authored at bootstrap ([D-19](#8-design-decisions-living)).
 
 ### 4.1 Kernel model service
 **Responsibility:** define and hold the five nouns and their invariants (§3.2); answer "is this graph a
@@ -535,7 +535,7 @@ half of the re-record guard; behavioral fidelity stays residual, §3.10).
 **The contract machinery (what the design pins) vs. the contracts (content, authored at bootstrap).** A
 contract is *content the kit produces*, not part of the kit's machinery ([D-19](#8-design-decisions-living)): the full catalogue of per-type contracts is authored when Smith is trained against real systems
 (BST-02), the same way packages are. What the design pins is the **format and the engine** so any contract
-authored later is verifiable the same way. The format ([conformance/README.md](../conformance/README.md))
+authored later is verifiable the same way. The format ([conformance/README.md](../../specs/conformance/README.md))
 is the knative split: a normative **contract** layer (RFC 2119 prose over the three faces) + a **test-plan**
 layer (block-quote each clause → runnable check → machine-readable `[Output]` envelope), where every clause
 carries a stable **assertion ID** (`«TR-BEH-04»`). The engine consumes that: it runs the base contract + each
@@ -543,8 +543,8 @@ applicable per-type contract, emits one `[Output]` record per assertion, and gat
 passing — citing the **specific violated assertion IDs** on failure (PKG-31).
 
 Two **reference contracts** are authored now to prove the format and seed the convention:
-- [`conformance/contracts/base-setup.md`](../conformance/contracts/base-setup.md) — the base contract above.
-- [`conformance/contracts/work-tracker.md`](../conformance/contracts/work-tracker.md) — the per-capability
+- [`conformance/contracts/base-setup.md`](../../specs/conformance/contracts/base-setup.md) — the base contract above.
+- [`conformance/contracts/work-tracker.md`](../../specs/conformance/contracts/work-tracker.md) — the per-capability
   exemplar (the swap invariant, `«TR-BEH-06»`, and the general→specific match).
 
 **Recognized capability types (a design sketch, not the normative contracts).** MVP recognizes the types
@@ -799,7 +799,7 @@ what exists, what must be authored, what must be sourced — and never a half-bu
 ### 6.2 Contract-violation reporting (PKG-31, PKG-39)
 
 When verification fails, the report is **per-assertion**, never a bare "failed." Each violation is the
-`[Output]` envelope of §3.4 / [conformance/README.md](../conformance/README.md): the failed assertion ID, the
+`[Output]` envelope of §3.4 / [conformance/README.md](../../specs/conformance/README.md): the failed assertion ID, the
 contract it belongs to, the provider under test, and the specific violation in `detail`/`evidence`. The three
 verdicts compose per the readiness rule:
 
@@ -869,7 +869,7 @@ destroys the ability to roll back.
 ## 7. Acceptance Criteria
 
 Each `AC-NN` is a Given-When-Then scenario that operationalizes one or more features from
-[features.md](../requirements/features.md). ACs are grouped by lifecycle journey; the two MVP runs (AC-28,
+[features.md](../../features/features.md). ACs are grouped by lifecycle journey; the two MVP runs (AC-28,
 AC-29) are the end-to-end capstones. Every feature appears in at least one AC (§17 traceability). A feature
 softened to `MAY`/`SHOULD` (§2 MVP cut) is verified at that obligation level. At epic altitude each AC fixes
 the **observable to be checked**; the **exact fixture and signal** (which record, which two verbosity levels,
@@ -1201,9 +1201,9 @@ driver-native artifacts as persisted storage) with cross-driver portability/roun
 
 **D-19 — Normative contracts are content authored at bootstrap; the design pins the contract machinery and
 ships two reference contracts.** *Chosen:* the design pins the contract **format** (a normative RFC 2119
-layer + a runnable test-plan layer, joined by stable assertion IDs — [conformance/README.md](../conformance/README.md))
+layer + a runnable test-plan layer, joined by stable assertion IDs — [conformance/README.md](../../specs/conformance/README.md))
 and the **verification engine** (§4.4), and authors **two** reference contracts
-([base-setup](../conformance/contracts/base-setup.md), [work-tracker](../conformance/contracts/work-tracker.md));
+([base-setup](../../specs/conformance/contracts/base-setup.md), [work-tracker](../../specs/conformance/contracts/work-tracker.md));
 the remaining per-type contracts are authored **incrementally as stories** during MVP (some Smith-assisted at
 bootstrap, BST-02) and land as **catalogue content**, through that same machinery — shipped, just not designed
 in this doc. *Alternatives:* specify all per-type contracts in the design now (the
@@ -1263,8 +1263,8 @@ setups, so its own verification machinery is exercised the same way it exercises
   unresolved-set emission), the transpile field-map and the two prose transformers (§5.7), the BPMN↔authoring
   reduction's totality and reversibility (§5.7). These are pure functions of their inputs and tested as such.
 - **Contract** — every contract's **test-plan layer** (Part B) is a runnable suite: the base contract and each
-  per-type contract. The two reference contracts ([base-setup](../conformance/contracts/base-setup.md),
-  [work-tracker](../conformance/contracts/work-tracker.md)) ship with full Part B coverage and are the worked
+  per-type contract. The two reference contracts ([base-setup](../../specs/conformance/contracts/base-setup.md),
+  [work-tracker](../../specs/conformance/contracts/work-tracker.md)) ship with full Part B coverage and are the worked
   examples; `work-tracker`'s **swap invariant** (TR-BEH-06) is the regression guard for provider-agnosticism.
 - **Integration** — the two MVP runs (AC-28 developer port, AC-29 reuse) exercised end-to-end against real
   backings, each including a **negative beat** (an injected violation that readiness must refuse, AC-28/29).
@@ -1359,7 +1359,7 @@ rather than rebuilding or porting wholesale. Blast radius:
   guidance and feature self-discovery, so agent-facing docs are largely *emitted*, not separately authored.
 - **The consultation is the human UX** (CNSLT): Smith explains its recommendations and consequences in-band
   (AC-10/11), so the primary user-facing "documentation" is Smith's explanatory behavior, not a manual.
-- **Authoring docs already exist as the conformance README** ([conformance/README.md](../conformance/README.md)):
+- **Authoring docs already exist as the conformance README** ([conformance/README.md](../../specs/conformance/README.md)):
   the contract format + test-plan convention is the doc a package/type author writes against; the two reference
   contracts are the worked examples.
 - **Meta-skill sections are package-author docs** (PKG-08): `install`/`uninstall`/`troubleshooting`/`runtime`
@@ -1410,7 +1410,7 @@ as loops) was verified under stress, grounding the five-noun kernel + system con
 
 ## 17. Traceability Matrix
 
-Every feature in [features.md](../requirements/features.md) maps to at least one acceptance criterion. The
+Every feature in [features.md](../../features/features.md) maps to at least one acceptance criterion. The
 **Story** column is `—` until the story breakdown (plan.md) lands; **Verification Status** is `Pending` until
 implementation verifies each AC. The two capstones (AC-28, AC-29) integrate the spine features end-to-end in
 addition to the primary AC listed per row. The further link from an AC down to the **assertion IDs** that run

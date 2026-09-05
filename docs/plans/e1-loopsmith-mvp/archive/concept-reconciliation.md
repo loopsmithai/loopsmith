@@ -1,4 +1,4 @@
-# Concept Reconciliation — BotMinter → Loopsmith (#178)
+# Concept Reconciliation — BotMinter → Loopsmith (#1)
 
 Loopsmith is the **generalization of BotMinter**, not a 1:1 UX port. This document runs every
 significant BotMinter subsystem through a **product-first lens** and records a verdict that feeds

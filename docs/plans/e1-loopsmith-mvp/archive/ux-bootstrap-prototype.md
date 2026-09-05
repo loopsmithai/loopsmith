@@ -1,4 +1,4 @@
-# Mockup Brief — Loopsmith Bootstrap & Loop Studio (#178)
+# Mockup Brief — Loopsmith Bootstrap & Loop Studio (#1)
 
 **Hand this to an LLM to build a high-fidelity, clickable mockup** of the Loopsmith
 onboarding flow and the Loop Studio canvas.

@@ -1,4 +1,4 @@
-# Story Breakdown — Loopsmith MVP (#178)
+# Story Breakdown — Loopsmith MVP (#1)
 
 ## Approach — this plan is deliberately minimal
 
@@ -32,13 +32,13 @@ contradiction of it.
 
 ---
 
-## STORY-01: Birth the dumb Smith (and hand over #178)
+## STORY-01: Birth the dumb Smith (and hand over #1)
 
 **Title:** Birth the dumb Smith and hand over the epic
 
 **Objective:** Stand up a living, persistent, self-learning **"dumb" Smith** — knowing
 only its identity, carrying minimal skills/capabilities and a self-learning loop, with
-credentials to its home — and **hand it epic #178 + its artifacts** so that Smith, with
+credentials to its home — and **hand it epic #1 + its artifacts** so that Smith, with
 the PO, plans and executes the remaining residency.
 
 **Vertical slice (build this thread, not horizontal layers):** the thinnest end-to-end
@@ -57,7 +57,7 @@ Everything thin: one skill, one act, one memory. We thicken later — with Smith
 - **Home** — where Smith lives. Candidate: a new `loopsmith` repo (none exists yet under
   `projects/`). Not locked.
 - **Handover mechanism** — which artifacts (`design.md`, `features.md`, idea-honing,
-  research) and how #178 is presented to Smith as its first work item. Not locked.
+  research) and how #1 is presented to Smith as its first work item. Not locked.
 
 **Implementation Guidance:** research the substrate / home / handover and make a
 deliberate decision **before** cutting code. Build vertically; do not build
@@ -71,11 +71,11 @@ written and **persisted across a restart**; epic + artifacts retrievable by Smit
 the living Smith and its persistent memory / skills store.
 
 **Demo:** a persistent Smith that, restarted, recalls its identity and prior experience,
-reads #178 and its artifacts, and is ready to plan its residency with the PO.
+reads #1 and its artifacts, and is ready to plan its residency with the PO.
 
 **Requirements:** foundational / enabling — relates to BST-01…04 (the seed Smith,
 reached via residency), LEARN-01 (accumulate experience), OBS-01 (observable). The
-destination features and ACs in [features.md](../requirements/features.md) are realized
+destination features and ACs in [features.md](../../features/features.md) are realized
 by later **Smith-authored** stories.
 
 **Acceptance Criteria:** story-level ACs are pinned during `story-mgmt` planning. The

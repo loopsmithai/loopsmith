@@ -1,13 +1,13 @@
-# Idea Honing — Loopsmith MVP (#178)
+# Idea Honing — Loopsmith MVP (#1)
 
-This document records the **settled decisions** for the Loopsmith MVP, in the **kit frame** that #178
-landed on. #178 builds **the kit** — *conformance contracts* + *packaging grammar* + *packaging skills* —
+This document records the **settled decisions** for the Loopsmith MVP, in the **kit frame** that #1
+landed on. #1 builds **the kit** — *conformance contracts* + *packaging grammar* + *packaging skills* —
 an implementation-decoupled definition of what an agentic-LLM setup must be to **conform**, plus the
 skills that package any setup into a conforming one (run by **Smith**, the kit's consultant agent). **The
 kit ships no runtime.** The runtime people picture (console, Loop Studio, daemon, the cross-context digest)
 is the **first product the kit packages** — the proving ground, archived in
 [research/R-06](research/R-06-first-product-developer-blueprint.md) and
-[research/R-07](research/R-07-first-product-requirements.md) — **not** what #178 designs. (Smith himself is
+[research/R-07](research/R-07-first-product-requirements.md) — **not** what #1 designs. (Smith himself is
 *kit* machinery, shipped OOTB in that product — see Q-11.)
 
 Each answer is self-contained and uses the canonical vocabulary below. The packaging/extensibility model
@@ -22,7 +22,7 @@ runtime) is archived in [research/R-06](research/R-06-first-product-developer-bl
 
 ## Canonical vocabulary (used consistently throughout)
 
-- **kit** — what #178 builds: **conformance contracts** + **packaging grammar** + **packaging skills**,
+- **kit** — what #1 builds: **conformance contracts** + **packaging grammar** + **packaging skills**,
   carried by **Smith** (the agent that runs them). Implementation-decoupled; it ships **no runtime**, and the
   catalogue of packages is **produced by running the kit** (it starts empty).
 - **conformance contract** — what a setup's parts must *be and do* to conform. Two kinds: the **kernel
@@ -372,7 +372,7 @@ management UX (browse/import/export in Loop Studio) is post-MVP and **product-sc
 
 The MVP's features split by where they live:
 
-**Kit features (what #178 builds):**
+**Kit features (what #1 builds):**
 - **Packaging skills** — discover the target, recommend an opinionated best-fit reuse-first, co-design
   (author) what's missing, realize, verify, and a cross-cutting learn.
 - **Conformance** — the kernel contract + a capability contract per capability (three faces each); verify a

@@ -49,7 +49,7 @@ verifiable and is a known residual (PD-18) — this contract checks the *structu
 - `«BASE-REL-05»` Every item MUST carry **exactly one current status**, and that status MUST be a member of
   its loop's workflow status set (SET-04). An item whose status is not in the workflow is non-conforming.
 - `«BASE-REL-06»` Every loop **step** MUST have an **assigned actor** — `human`, `agent`, or `automated`
-  (SET-08, [D-06](../../178-loopsmith-mvp/design.md#8-design-decisions-living)). A step with no actor is
+  (SET-08, [D-06](../../../plans/e1-loopsmith-mvp/design.md#8-design-decisions-living)). A step with no actor is
   non-conforming.
 - `«BASE-REL-07»` Each actor assigned into the setup MUST belong to **at least one context** (SET-09); a
   single actor MAY belong to more than one.

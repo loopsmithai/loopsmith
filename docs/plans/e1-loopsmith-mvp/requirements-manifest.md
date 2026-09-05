@@ -1,30 +1,30 @@
-# Requirements Manifest — Loopsmith MVP (#178)
+# Requirements Manifest — Loopsmith MVP (#1)
 
-#178 designs **the kit**: the conformance contracts, the package grammar, the packaging skills, and the
+#1 designs **the kit**: the conformance contracts, the package grammar, the packaging skills, and the
 bootstrap-Smith that carries them. The requirements catalogue therefore describes the kit as a generic
 capability — what it lets each persona do — not the specific dogfood run that proves it.
 
 ## Catalogue
 
 All requirements live in a single journey-organized catalogue file,
-[features.md](../requirements/features.md), organized in lifecycle order across four personas (P1 Loopsmith
+[features.md](../../features/features.md), organized in lifecycle order across four personas (P1 Loopsmith
 Developer · P2 Family Author · P3 Package Author · P4 End User). Each journey section carries its own
 ID series; the series prefix is the category.
 
 | Series | Journey | Count |
 |--------|---------|-------|
-| [BST](../requirements/features.md#bootstrap--the-apprenticeship-4-features) | Bootstrap — the apprenticeship (train Smith, seed the catalogue) | 4 |
-| [FAM](../requirements/features.md#family-authoring--growing-the-kits-reach-4-features) | Family authoring — new families & blueprints | 4 |
-| [PKG](../requirements/features.md#packages-9-features) | Packages — provides/requires, capability identity, contracts, lifecycle hooks, meta-skill | 9 |
-| [DIS](../requirements/features.md#discover--choose-5-features) | Discover & choose — browse blueprints/packages, capability specificity, alternatives, gaps | 5 |
-| [CNSLT](../requirements/features.md#the-consultation--conversational-discovery-with-smith-5-features) | The consultation — conversational discovery with Smith | 5 |
-| [BLD](../requirements/features.md#build-a-setup-with-the-builder-agent-9-features) | Build a setup with the builder agent — target → recommend → author → verify | 9 |
-| [AWV](../requirements/features.md#assemble-wire--verify-9-features) | Assemble, wire & verify — resolve, install, connect sources, conformance check | 9 |
-| [CNTXT](../requirements/features.md#contexts-sources--connection-rules-5-features) | Contexts, sources & connection rules — membership ⟂ access, home source, unification | 5 |
-| [SET](../requirements/features.md#what-a-conforming-setup-contains-11-features) | What a conforming setup contains — the house spec | 11 |
-| [OPS](../requirements/features.md#operate--evolve-a-running-setup-5-features) | Operate & evolve — swap, remove, version/upgrade/rollback, incremental, runtime skills | 5 |
-| [USR](../requirements/features.md#smith-gets-better-at-serving-you-3-features) | Smith gets better at serving you — per-user friction memory, grounded advice, catalogue growth | 3 |
-| [OBS](../requirements/features.md#cross-cutting) | Cross-cutting — observability | 1 |
+| [BST](../../features/features.md#bootstrap--the-apprenticeship-4-features) | Bootstrap — the apprenticeship (train Smith, seed the catalogue) | 4 |
+| [FAM](../../features/features.md#family-authoring--growing-the-kits-reach-4-features) | Family authoring — new families & blueprints | 4 |
+| [PKG](../../features/features.md#packages-9-features) | Packages — provides/requires, capability identity, contracts, lifecycle hooks, meta-skill | 9 |
+| [DIS](../../features/features.md#discover--choose-5-features) | Discover & choose — browse blueprints/packages, capability specificity, alternatives, gaps | 5 |
+| [CNSLT](../../features/features.md#the-consultation--conversational-discovery-with-smith-5-features) | The consultation — conversational discovery with Smith | 5 |
+| [BLD](../../features/features.md#build-a-setup-with-the-builder-agent-9-features) | Build a setup with the builder agent — target → recommend → author → verify | 9 |
+| [AWV](../../features/features.md#assemble-wire--verify-9-features) | Assemble, wire & verify — resolve, install, connect sources, conformance check | 9 |
+| [CNTXT](../../features/features.md#contexts-sources--connection-rules-5-features) | Contexts, sources & connection rules — membership ⟂ access, home source, unification | 5 |
+| [SET](../../features/features.md#what-a-conforming-setup-contains-11-features) | What a conforming setup contains — the house spec | 11 |
+| [OPS](../../features/features.md#operate--evolve-a-running-setup-5-features) | Operate & evolve — swap, remove, version/upgrade/rollback, incremental, runtime skills | 5 |
+| [USR](../../features/features.md#smith-gets-better-at-serving-you-3-features) | Smith gets better at serving you — per-user friction memory, grounded advice, catalogue growth | 3 |
+| [OBS](../../features/features.md#cross-cutting) | Cross-cutting — observability | 1 |
 
 **Total:** 70 features across 12 series, one catalogue file.
 

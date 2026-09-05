@@ -1,13 +1,13 @@
 # Session Handoff — Loopsmith loop model / BPMN architecture
 
 *Checkpoint dump so the conversation can be compacted and resumed cleanly. Date: 2026-06-22.
-Epic #178 "Loopsmith MVP", design phase. Nothing in this session is committed.*
+Epic #1 "Loopsmith MVP", design phase. Nothing in this session is committed.*
 
 ---
 
 ## 0. Where we are / the job
 
-We are in the **design phase of epic #178**. The thing we had to nail before writing
+We are in the **design phase of epic #1**. The thing we had to nail before writing
 `design.md` is: **what is a "loop," precisely, and how is it represented?** This session
 converged on the answer below and validated it against a real system (BotMinter) and a working
 transpile simulation. The core design bet is **de-risked**. The next move is to **write it down**

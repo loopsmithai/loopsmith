@@ -136,9 +136,9 @@ Additionally, "product UI" is the presentation's own term. The design doc distin
 
 ---
 
-## Comment 5: "I am so confused by 'how the MVP proves this — two runs, run 1, run 2' building two real families and blueprints, then the very next slide asks 'is it clear that #178 builds the kit, not the product?'"
+## Comment 5: "I am so confused by 'how the MVP proves this — two runs, run 1, run 2' building two real families and blueprints, then the very next slide asks 'is it clear that #1 builds the kit, not the product?'"
 
-**Source:** Slide 7 (MVP Thesis) describes two runs that produce real families and blueprints. Slide 8 (Review prompt) asks "Is it clear that #178 builds the kit, not a product?"
+**Source:** Slide 7 (MVP Thesis) describes two runs that produce real families and blueprints. Slide 8 (Review prompt) asks "Is it clear that #1 builds the kit, not a product?"
 
 **PO concern:** If the MVP's proof IS producing two real setups (families, blueprints, packages), how can the design simultaneously claim it's "not a product"? The two runs ARE the product output — they produce real, usable things. The kit/product distinction collapses when the proof of the kit is building products.
 
@@ -150,13 +150,13 @@ The "not a product" language comes from:
 - idea-honing.md Q-01 (line 85): "The MVP builds the kit... **not a product**."
 - idea-honing.md canonical vocabulary (line 76-77): "**Not the kit** — and Smith is kit machinery, shipped OOTB in this blueprint, not a product-only persona."
 
-The idea-honing uses "not a product" to mean: what #178 delivers is the machinery (contracts + grammar + skills), not the "first product" (the developer-blueprint runtime with console/Loop Studio/web UI, designed in R-06/R-07). The "first product" is a separate deliverable that USES the kit.
+The idea-honing uses "not a product" to mean: what #1 delivers is the machinery (contracts + grammar + skills), not the "first product" (the developer-blueprint runtime with console/Loop Studio/web UI, designed in R-06/R-07). The "first product" is a separate deliverable that USES the kit.
 
 BUT the two MVP runs (design.md lines 62-65) produce real families, blueprints, and packages — `factory` family, `developer` blueprint, `simple-assistant` blueprint. These ARE concrete, usable outputs. The idea-honing acknowledges this (Q-01 line 88): "produced, not hand-shipped." The kit's proof IS producing things.
 
 **The confusion:** The presentation juxtaposes:
 1. "The MVP proves this with two real runs that produce families and blueprints" (slide 7)
-2. "Is it clear that #178 builds the kit, not a product?" (slide 8 review prompt)
+2. "Is it clear that #1 builds the kit, not a product?" (slide 8 review prompt)
 
 A reader sees the kit producing real, concrete, usable artifacts and is then asked to agree it's "not a product." This is incoherent because:
 
@@ -169,7 +169,7 @@ A reader sees the kit producing real, concrete, usable artifacts and is then ask
 The design doc is internally consistent on this: the kit is a product (line 22), it produces content (the two runs), and the "first product" (R-06) is a separate thing built using the kit. The kit/first-product split is clear in the design doc.
 
 The confusion has two sources:
-1. **The presentation's review prompt** (slide 8) asked "is it clear that #178 builds the kit, not a product?" — importing the idea-honing's "not a product" shorthand, which contradicts the design doc's own line 22 ("a product in the sense a compiler toolchain is a product").
+1. **The presentation's review prompt** (slide 8) asked "is it clear that #1 builds the kit, not a product?" — importing the idea-honing's "not a product" shorthand, which contradicts the design doc's own line 22 ("a product in the sense a compiler toolchain is a product").
 2. **The idea-honing's "not a product" shorthand** (Q-01 line 85) is confusing when read without context. It means "not the first product (R-06)" but reads as "not a product at all."
 
 **Resolution needed:**
@@ -789,7 +789,7 @@ design.md §3.10 has NONE of this context. It says "two faces and one runtime" a
 
 **Investigation:** Swept design-notes.md (PD-01→PD-22), the deleted reviewed design `a14d9c1` (1164 lines, ~36 ACs — replaced in the BPMN/pixi rebuild), idea-honing.md (Q-01→Q-22), and concept-reconciliation.md against the current design.md. Key structural fact: the current design.md is a **rebuild** (RECONCILIATION-NEEDED.md), which is exactly where earlier ideas could silently drop.
 
-**Master tension (resolved by PO):** idea-honing draws a hard line — #178 builds *the kit*; the kit ships *no runtime*; the console/Loop Studio/daemon/cross-context digest are the **first product** (R-06/R-07), "not what #178 designs." design.md never states this boundary (no mention of `first product`, `R-06/R-07`, `no runtime`). **PO resolution:** (1) Kit ≠ product — the kit ships no runtime, like an IDE doesn't ship the apps it builds. (2) Building/testing ≠ shipping — #178 **will build and test two families** (a `developer` blueprint onboarded via **web console**; a `simple-assistant` via **CLI**) specifically to validate the kit's central feature, **Smith**, against two genuinely different onboarding surfaces. The runtimes produced are the acceptance-demo *target*, not the kit's deliverable.
+**Master tension (resolved by PO):** idea-honing draws a hard line — #1 builds *the kit*; the kit ships *no runtime*; the console/Loop Studio/daemon/cross-context digest are the **first product** (R-06/R-07), "not what #1 designs." design.md never states this boundary (no mention of `first product`, `R-06/R-07`, `no runtime`). **PO resolution:** (1) Kit ≠ product — the kit ships no runtime, like an IDE doesn't ship the apps it builds. (2) Building/testing ≠ shipping — #1 **will build and test two families** (a `developer` blueprint onboarded via **web console**; a `simple-assistant` via **CLI**) specifically to validate the kit's central feature, **Smith**, against two genuinely different onboarding surfaces. The runtimes produced are the acceptance-demo *target*, not the kit's deliverable.
 
 **Findings ledger:**
 
@@ -809,7 +809,7 @@ design.md §3.10 has NONE of this context. It says "two faces and one runtime" a
 - **E — DROPPED (non-gap).** PO Socratic check caught an over-flag: design.md scopes BPMN to *loops* only (§3.10/§5.7/D-16), never claims "all packages are workflows" — so PD-19's "two payloads are NOT processes" bounds an overclaim that doesn't exist. And the "three faces of a behavioral unit" substance is already in §3.10 (prose = content / BPMN = wiring / hat = LLM session), sensibly *not* reusing the "three faces" label (taken by the contract). No edit needed.
 - **F — DONE.** §3.3: `github-repo` source type-specific ops (`fork`/`branch`/`PR`/`issues`) + `upstream → fork` chain for cross-identity contribution; concrete operation set + fork-chain mechanics deferred to a story-level package-building task (run #1 authors `github-repo`).
 - **G — DONE.** Shepherding added to §3.6 as a "rough idea — to be sharpened in a story" note (touchpoint-based detect→root-cause→escalate; not anomaly-detection; mechanism story-deferred). Stale PD-02 citations dropped from §3.8 + D-07; PD-02 marked superseded-in-part in design-notes (daemon/event-bus retired by D-23).
-- **A — DONE.** §1: "Kit, not product — and building is not shipping" — kit ships no runtime, but #178 builds+tests two products (developer/web-console, simple-assistant/CLI) to validate Smith; developer product named as the personal/professional cross-context digest setup; R-06/R-07 linked.
+- **A — DONE.** §1: "Kit, not product — and building is not shipping" — kit ships no runtime, but #1 builds+tests two products (developer/web-console, simple-assistant/CLI) to validate Smith; developer product named as the personal/professional cross-context digest setup; R-06/R-07 linked.
 - **B — DONE.** §1: four falsifiable claims table (D-i…D-iv), restoring D-ii ("autonomy comes from context, not config") which was absent; + naming note distinguishing D-i…D-iv (hypotheses) from D-01…D-23 (decisions).
 - **C — DONE.** §2: "MVP trims cardinality, never concepts" restored.
 - **D — DONE.** §3.2: membership-not-elevation enables cross-context reach (one Smith spanning personal+professional); "tracker board is a shared surface, not the context boundary" (board-visibility ≠ membership). The personal/professional instantiation also landed in the §1 A-paragraph.
