@@ -1,0 +1,34 @@
+event_loop:
+  prompt_file: PROMPT.md
+  max_iterations: 100
+  persistent: true
+cli:
+  backend: claude
+core:
+  guardrails:
+  - All issue operations use the github-project skill — no write-locks needed
+hats:
+  record_merge:
+    name: Record Merge
+    description: Records the PR name of each work item that reaches the merge status.
+    triggers:
+    - snt.record
+    publishes:
+    - snt.record.done
+    instructions: |
+      ## Record Merge
+      
+      Records the PR name of each work item that reaches the merge status.
+      
+      Handle the work item currently at board status `snt:gate:merge`.
+      On RECORDED: publish `snt.record.done`. (no status change.)
+      
+      Read the linked PR's title from the work item. Append one line
+      to the local file `./merges.txt` in the form `<issue#> <pr-title>`.
+      
+      Use the `github-project` skill.
+skills:
+  enabled: true
+  overrides:
+    board-scanner:
+      auto_inject: true

@@ -1,0 +1,64 @@
+[package]
+name = "smith"
+version = "0.1.0"
+edition = "2021"
+description = "Loopsmith operator binary"
+license = "Apache-2.0"
+
+[dependencies]
+clap = { version = "4", features = ["derive"] }
+# clap_complete = { version = "4", features = ["unstable-dynamic"] }
+cliclack = "0.3"
+console = "0.15"
+indicatif = "0.17"
+# comfy-table = "7"
+anyhow = "1"
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+serde_yml = "0.0.12"
+# include_dir = "0.7"
+jsonwebtoken = { version = "10", features = ["aws_lc_rs", "use_pem"] }
+dirs = "5"
+which = "7"
+libc = "0.2"
+chrono = { version = "0.4", features = ["serde"] }
+axum = "0.8"
+tower-http = { version = "0.6", features = ["cors"] }
+hmac = "0.12"
+sha2 = "0.10"
+hex = "0.4"
+tempfile = "3"
+petgraph = { version = "0.8", features = ["dot_parser"] }
+dot-parser = "0.5"
+dot-parser-macros = "0.5"
+once_cell = "1"
+keyring = { version = "3", features = ["sync-secret-service"] }
+dbus-secret-service = { version = "4.1.0", features = ["vendored"] }
+tokio = { version = "1", features = ["process", "io-util", "sync", "macros", "rt-multi-thread", "signal"] }
+# tokio-util = { version = "0.7", features = ["compat"] }
+# sacp = "11.0.0"
+# agent-client-protocol-schema = { version = "0.11.3", features = ["unstable_session_usage"] }
+# pulldown-cmark = "0.12"
+# futures = "0.3"
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+# fs2 = "0.4"
+reqwest = { version = "0.12", features = ["json", "blocking"] }
+uuid = { version = "1", features = ["v4"] }
+open = "5"
+
+# [features]
+# default = ["console"]
+# e2e = []
+# console = ["rust-embed"]
+
+[dev-dependencies]
+rand = "0.8"
+rexpect = "0.7"
+rsa = "0.9"
+tempfile = "3"
+
+# Agent-facing CLI binary
+[[bin]]
+name = "smith-agent"
+path = "src/agent_main.rs"

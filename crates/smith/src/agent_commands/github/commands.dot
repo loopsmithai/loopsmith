@@ -1,0 +1,276 @@
+// smith-agent command graph — compile-time spec
+//
+// This DOT file is the single source of truth for the entire command tree.
+// One graph. Every node returns an envelope — same shape at every level.
+//
+// Group nodes (smith-agent, github, pr, issue, ...):
+//   - exit code 2 (discovery — no operation executed)
+//   - envelope: summary, next=children. No result.
+//
+// Leaf nodes (pr create, board, auth-status, ...):
+//   - exit code 0 (success): envelope has summary, result, next, related
+//   - exit code 1 (failure): envelope has summary, error with recovery hints
+//
+// Edge types:
+//   kind="child"    — hierarchy (group → subcommand)
+//   kind="next"     — workflow (what logically follows)
+//   kind="related"  — discovery (operations the agent might not know about)
+//   kind="recovery" — error recovery (how to fix a failure)
+//
+// Parsed at compile time by petgraph's graph_from_file! macro.
+// Invalid DOT = build failure. No runtime file dependency.
+//
+// Template variables: {org}, {id}, {number}, {title}, {kind}, {status},
+//   {from}, {to}, {user}, {action}, {parent}, {source},
+//   {branch}, {base}, {method}, {total}, {closed}, {open},
+//   {repo}, {project}, {initial_status}, {milestone},
+//   {app_id}, {installation_id}, {pr}
+
+digraph smith_agent {
+
+    // ══════════════════════════════════════════════════════════════════
+    // Command tree — hierarchy
+    // ══════════════════════════════════════════════════════════════════
+
+    // Root
+    root [label="smith-agent" summary="Loopsmith agent CLI — machine-readable interface for coding agents"]
+
+    // Level 1: domain
+    github [label="github" summary="GitHub operations — issues, PRs, board, milestones"]
+
+    root -> github [kind="child" template="GitHub operations: smith-agent github --org <org>"]
+
+    // Level 2: groups within github
+    issue      [label="issue"      summary="Issue operations"]
+    pr         [label="pr"         summary="Pull request operations"]
+    status     [label="status"     summary="Project board status transitions"]
+    sub_issue  [label="sub-issue"  summary="Sub-issue operations"]
+    milestone  [label="milestone"  summary="Milestone operations"]
+
+    github -> auth_status [kind="child" template="Check auth: smith-agent github --org {org} auth-status"]
+    github -> mint_token  [kind="child" template="Mint token: smith-agent github --org {org} mint-token"]
+    github -> list_projects [kind="child" template="List projects: smith-agent github --org {org} list-projects"]
+    github -> board       [kind="child" template="View board: smith-agent github --org {org} --project <N> board"]
+    github -> issue       [kind="child" template="Issue ops: smith-agent github --org {org} issue"]
+    github -> pr          [kind="child" template="PR ops: smith-agent github --org {org} pr"]
+    github -> status      [kind="child" template="Status transitions: smith-agent github --org {org} --project <N> status"]
+    github -> sub_issue   [kind="child" template="Sub-issues: smith-agent github --org {org} sub-issue"]
+    github -> milestone   [kind="child" template="Milestones: smith-agent github --org {org} milestone"]
+    github -> fork_op     [kind="child" template="Fork a repo: smith-agent github --org {org} fork --source <owner/repo>"]
+
+    // Level 3: leaf operations within groups
+
+    // issue children
+    issue -> issue_create  [kind="child" template="Create: smith-agent github --org {org} issue create --title <t> --body <b> --kind <epic|story|task|bug>"]
+    issue -> issue_view    [kind="child" template="View: smith-agent github --org {org} issue view <number>"]
+    issue -> issue_query   [kind="child" template="Query: smith-agent github --org {org} issue query --by <label|status|assignee|issue-type> --label <val>"]
+    issue -> issue_close   [kind="child" template="Close: smith-agent github --org {org} issue close <number>"]
+    issue -> issue_reopen  [kind="child" template="Reopen: smith-agent github --org {org} issue reopen <number>"]
+    issue -> issue_comment [kind="child" template="Comment: smith-agent github --org {org} issue comment <number> --body <text>"]
+    issue -> issue_assign  [kind="child" template="Assign: smith-agent github --org {org} issue assign <number> --user <username>"]
+    issue -> issue_update  [kind="child" template="Update: smith-agent github --org {org} issue update <number> --title <new_title>"]
+
+    // pr children
+    pr -> pr_create       [kind="child" template="Create: smith-agent github --org {org} pr create --title <t> --body <b> --branch <head> --base main"]
+    pr -> pr_view         [kind="child" template="View: smith-agent github --org {org} pr view <number>"]
+    pr -> pr_list         [kind="child" template="List: smith-agent github --org {org} pr list"]
+    pr -> pr_merge        [kind="child" template="Merge: smith-agent github --org {org} pr merge <number> --method squash"]
+    pr -> pr_approve      [kind="child" template="Approve: smith-agent github --org {org} pr approve <number>"]
+    pr -> pr_req_changes  [kind="child" template="Request changes: smith-agent github --org {org} pr request-changes <number> --body <text>"]
+    pr -> pr_comment      [kind="child" template="Comment: smith-agent github --org {org} pr comment <number> --body <text>"]
+    pr -> pr_close        [kind="child" template="Close: smith-agent github --org {org} pr close <number>"]
+
+    // status children
+    status -> status_set  [kind="child" template="Set: smith-agent github --org {org} --project <N> status set <number> --to <status>"]
+
+    // sub-issue children
+    sub_issue -> sub_issue_create [kind="child" template="Create: smith-agent github --org {org} sub-issue create --parent <N> --title <title>"]
+    sub_issue -> sub_issue_list   [kind="child" template="List: smith-agent github --org {org} sub-issue list --parent <N>"]
+    sub_issue -> sub_issue_status [kind="child" template="Status: smith-agent github --org {org} sub-issue status --parent <N>"]
+
+    // milestone children
+    milestone -> milestone_list   [kind="child" template="List: smith-agent github --org {org} milestone list"]
+    milestone -> milestone_create [kind="child" template="Create: smith-agent github --org {org} milestone create --title <title>"]
+    milestone -> milestone_assign [kind="child" template="Assign: smith-agent github --org {org} milestone assign --issue <N> --title <milestone>"]
+
+    // ══════════════════════════════════════════════════════════════════
+    // Leaf operations (with summaries)
+    // ══════════════════════════════════════════════════════════════════
+
+    auth_status      [label="auth-status"        summary="Authenticated as GitHub App {app_id} (installation {installation_id}) for org {org}"]
+    mint_token       [label="mint-token"         summary="Token minted for {org}; GH_CONFIG_DIR written to {gh_config_dir}"]
+    list_projects    [label="list-projects"      summary="Projects for org {org}"]
+    board            [label="board"              summary="Board for {repo} project #{project}: {total} items"]
+    issue_create     [label="create"             summary="Created {kind} #{number} in {repo}, status: {initial_status}"]
+    issue_view       [label="view"               summary="Issue #{number} ({state}, type: {issue_type}, status: {board_status})"]
+    issue_query      [label="query"              summary="Found {count} issues matching {by}={value}"]
+    issue_close      [label="close"              summary="Closed issue #{number}"]
+    issue_reopen     [label="reopen"             summary="Reopened issue #{number}"]
+    issue_comment    [label="comment"            summary="Added comment to issue #{number}"]
+    issue_assign     [label="assign"             summary="{action} {user} on issue #{number}"]
+    issue_update     [label="update"             summary="Updated issue #{number}"]
+    status_set       [label="set"                summary="Transitioned #{number}: {from} -> {to} (verified)"]
+    pr_create        [label="create"             summary="Created PR from {branch} -> {base} in {repo}"]
+    pr_view          [label="view"               summary="PR #{pr} ({state}, review: {review_decision})"]
+    pr_list          [label="list"               summary="Found {count} open PRs in {repo}"]
+    pr_merge         [label="merge"              summary="Merged PR #{pr} via {method}"]
+    pr_approve       [label="approve"            summary="Approved PR #{pr}"]
+    pr_req_changes   [label="request-changes"    summary="Requested changes on PR #{pr}"]
+    pr_comment       [label="comment"            summary="Commented on PR #{pr}"]
+    pr_close         [label="close"              summary="Closed PR #{pr}"]
+    sub_issue_create [label="create"             summary="Created {issue_type} #{number} as sub-issue of #{parent}"]
+    sub_issue_list   [label="list"               summary="{count} sub-issues under #{parent}"]
+    sub_issue_status [label="status"             summary="#{parent}: {closed}/{total} sub-issues complete ({open} remaining)"]
+    milestone_list   [label="list"               summary="{count} milestones in {repo}"]
+    milestone_create [label="create"             summary="Created milestone {title}"]
+    milestone_assign [label="assign"             summary="Assigned issue #{number} to milestone {milestone}"]
+    fork_op          [label="fork"               summary="Forked {source} into {org}"]
+
+    // ══════════════════════════════════════════════════════════════════
+    // Workflow edges — next (what logically follows)
+    // ══════════════════════════════════════════════════════════════════
+
+    // — auth_status —
+    auth_status -> board       [kind="next" template="View the board: smith-agent github --org {org} --project <N> board"]
+    auth_status -> issue_query [kind="next" template="List issues by type: smith-agent github --org {org} issue query --by issue-type --label Epic"]
+
+    // — mint_token —
+    mint_token -> auth_status  [kind="next" template="Check auth: smith-agent github --org {org} auth-status"]
+
+    // — board —
+    board -> issue_view        [kind="next" template="View a specific issue: smith-agent github --org {org} issue view <number>"]
+    board -> issue_create      [kind="next" template="Create an issue: smith-agent github --org {org} issue create --title <t> --body <b> --kind <epic|story|task|bug>"]
+    board -> issue_query       [kind="next" template="Query by status: smith-agent github --org {org} issue query --by status --status <status_name>"]
+    board -> status_set        [kind="next" template="Transition status: smith-agent github --org {org} --project {project} status set <number> --to <status>"]
+
+    // — issue_create —
+    issue_create -> issue_view        [kind="next" template="View it: smith-agent github --org {org} issue view {number}"]
+    issue_create -> status_set        [kind="next" template="Transition status: smith-agent github --org {org} --project {project} status set {number} --to <status> --from {initial_status}"]
+    issue_create -> issue_assign      [kind="next" template="Assign someone: smith-agent github --org {org} issue assign {number} --user <username>"]
+    issue_create -> sub_issue_create  [kind="next" template="Add a sub-issue: smith-agent github --org {org} sub-issue create --parent {number} --title <title>" condition="kind_equals_epic"]
+
+    // — issue_view —
+    issue_view -> status_set        [kind="next" template="Transition status: smith-agent github --org {org} --project {project} status set {number} --to <status> --from {board_status}"]
+    issue_view -> issue_comment     [kind="next" template="Add a comment: smith-agent github --org {org} issue comment {number} --body <text>"]
+    issue_view -> issue_close       [kind="next" template="Close it: smith-agent github --org {org} issue close {number}" condition="state_equals_OPEN"]
+    issue_view -> issue_reopen      [kind="next" template="Reopen it: smith-agent github --org {org} issue reopen {number}" condition="state_equals_CLOSED"]
+    issue_view -> sub_issue_list    [kind="next" template="Check sub-issues: smith-agent github --org {org} sub-issue status --parent {number}" condition="has_sub_issues"]
+    issue_view -> issue_update      [kind="next" template="Update title/body: smith-agent github --org {org} issue update {number} --title <new_title>"]
+    issue_view -> issue_assign      [kind="next" template="Assign/unassign: smith-agent github --org {org} issue assign {number} --user <username>"]
+
+    // — issue_close —
+    issue_close -> issue_reopen     [kind="next" template="Reopen it: smith-agent github --org {org} issue reopen {number}"]
+    issue_close -> issue_view       [kind="next" template="View it: smith-agent github --org {org} issue view {number}"]
+
+    // — issue_reopen —
+    issue_reopen -> status_set      [kind="next" template="Transition status: smith-agent github --org {org} --project {project} status set {number} --to <status>"]
+    issue_reopen -> issue_view      [kind="next" template="View it: smith-agent github --org {org} issue view {number}"]
+
+    // — issue_comment —
+    issue_comment -> issue_view     [kind="next" template="View the issue: smith-agent github --org {org} issue view {number}"]
+    issue_comment -> status_set     [kind="next" template="Transition status: smith-agent github --org {org} --project {project} status set {number} --to <status>"]
+
+    // — issue_assign —
+    issue_assign -> issue_view      [kind="next" template="View the issue: smith-agent github --org {org} issue view {number}"]
+    issue_assign -> issue_query     [kind="next" template="Query by assignee: smith-agent github --org {org} issue query --by assignee --assignee {user}"]
+
+    // — issue_update —
+    issue_update -> issue_view      [kind="next" template="View it: smith-agent github --org {org} issue view {number}"]
+
+    // — issue_query —
+    issue_query -> issue_view       [kind="next" template="View details: smith-agent github --org {org} issue view <number>"]
+    issue_query -> status_set       [kind="next" template="Transition one: smith-agent github --org {org} --project {project} status set <number> --to <status>"]
+
+    // — status_set —
+    status_set -> issue_view        [kind="next" template="View the issue: smith-agent github --org {org} issue view {number}"]
+    status_set -> issue_comment     [kind="next" template="Comment on the transition: smith-agent github --org {org} issue comment {number} --body <text>"]
+
+    // — pr_create —
+    pr_create -> pr_view            [kind="next" template="View the PR: smith-agent github --org {org} pr view {pr}"]
+    pr_create -> pr_list            [kind="next" template="List PRs: smith-agent github --org {org} pr list"]
+
+    // — pr_view —
+    pr_view -> pr_approve           [kind="next" template="Approve: smith-agent github --org {org} pr approve {pr}" condition="state_equals_OPEN"]
+    pr_view -> pr_req_changes       [kind="next" template="Request changes: smith-agent github --org {org} pr request-changes {pr} --body <text>" condition="state_equals_OPEN"]
+    pr_view -> pr_merge             [kind="next" template="Merge: smith-agent github --org {org} pr merge {pr} --method squash" condition="review_approved"]
+    pr_view -> pr_comment           [kind="next" template="Comment: smith-agent github --org {org} pr comment {pr} --body <text>" condition="state_equals_OPEN"]
+    pr_view -> pr_close             [kind="next" template="Close: smith-agent github --org {org} pr close {pr}" condition="state_equals_OPEN"]
+
+    // — pr_list —
+    pr_list -> pr_view              [kind="next" template="View a PR: smith-agent github --org {org} pr view <number>"]
+    pr_list -> pr_create            [kind="next" template="Create a new PR: smith-agent github --org {org} pr create --title <t> --body <b> --branch <head> --base main"]
+
+    // — pr_merge —
+    pr_merge -> pr_view             [kind="next" template="View the merged PR: smith-agent github --org {org} pr view {pr}"]
+    pr_merge -> board               [kind="next" template="View the board: smith-agent github --org {org} --project {project} board"]
+
+    // — pr_approve —
+    pr_approve -> pr_view           [kind="next" template="View the PR: smith-agent github --org {org} pr view {pr}"]
+    pr_approve -> pr_merge          [kind="next" template="Merge: smith-agent github --org {org} pr merge {pr} --method squash"]
+
+    // — pr_req_changes / pr_comment / pr_close —
+    pr_req_changes -> pr_view       [kind="next" template="View the PR: smith-agent github --org {org} pr view {pr}"]
+    pr_comment -> pr_view           [kind="next" template="View the PR: smith-agent github --org {org} pr view {pr}"]
+    pr_close -> pr_list             [kind="next" template="List remaining PRs: smith-agent github --org {org} pr list"]
+
+    // — sub_issue_create —
+    sub_issue_create -> issue_view        [kind="next" template="View parent: smith-agent github --org {org} issue view {parent}"]
+    sub_issue_create -> sub_issue_status  [kind="next" template="Check completion: smith-agent github --org {org} sub-issue status --parent {parent}"]
+    sub_issue_create -> sub_issue_create  [kind="next" template="Create another: smith-agent github --org {org} sub-issue create --parent {parent} --title <title>"]
+
+    // — sub_issue_list —
+    sub_issue_list -> issue_view          [kind="next" template="View a sub-issue: smith-agent github --org {org} issue view <number>"]
+    sub_issue_list -> sub_issue_create    [kind="next" template="Add another: smith-agent github --org {org} sub-issue create --parent {parent} --title <title>"]
+    sub_issue_list -> sub_issue_status    [kind="next" template="Check completion: smith-agent github --org {org} sub-issue status --parent {parent}"]
+
+    // — sub_issue_status —
+    sub_issue_status -> sub_issue_list    [kind="next" template="View open sub-issues: smith-agent github --org {org} sub-issue list --parent {parent}" condition="not_complete"]
+    sub_issue_status -> issue_close       [kind="next" template="Close the parent: smith-agent github --org {org} issue close {parent}" condition="all_complete"]
+    sub_issue_status -> status_set        [kind="next" template="Transition parent status: smith-agent github --org {org} --project {project} status set {parent} --to <done_status>" condition="all_complete"]
+
+    // — milestone_list —
+    milestone_list -> milestone_create    [kind="next" template="Create a milestone: smith-agent github --org {org} milestone create --title <title> --due-date YYYY-MM-DD"]
+    milestone_list -> milestone_assign    [kind="next" template="Assign an issue: smith-agent github --org {org} milestone assign --issue <N> --title <milestone>"]
+
+    // — milestone_create —
+    milestone_create -> milestone_assign  [kind="next" template="Assign an issue: smith-agent github --org {org} milestone assign --issue <N> --title {title}"]
+
+    // — milestone_assign —
+    milestone_assign -> issue_view        [kind="next" template="View the issue: smith-agent github --org {org} issue view {number}"]
+    milestone_assign -> issue_query       [kind="next" template="Query this milestone: smith-agent github --org {org} issue query --by milestone --milestone {milestone}"]
+
+    // ══════════════════════════════════════════════════════════════════
+    // Related edges — discovery
+    // ══════════════════════════════════════════════════════════════════
+
+    issue_create -> board             [kind="related" template="View the board: smith-agent github --org {org} --project {project} board"]
+    issue_close -> board              [kind="related" template="View the board: smith-agent github --org {org} --project {project} board"]
+    issue_reopen -> board             [kind="related" template="View the board: smith-agent github --org {org} --project {project} board"]
+    issue_query -> board              [kind="related" template="Full board view: smith-agent github --org {org} --project {project} board"]
+    status_set -> board               [kind="related" template="View the board: smith-agent github --org {org} --project {project} board"]
+    pr_create -> board                [kind="related" template="View the board: smith-agent github --org {org} --project {project} board"]
+    pr_merge -> issue_close           [kind="related" template="Close related issues: smith-agent github --org {org} issue close <number>"]
+    pr_close -> board                 [kind="related" template="View the board: smith-agent github --org {org} --project {project} board"]
+    sub_issue_list -> issue_view      [kind="related" template="View parent: smith-agent github --org {org} issue view {parent}"]
+    sub_issue_status -> issue_view    [kind="related" template="View parent: smith-agent github --org {org} issue view {parent}"]
+    milestone_create -> issue_query   [kind="related" template="Query issues: smith-agent github --org {org} issue query --by milestone --milestone {title}"]
+    fork_op -> pr_create              [kind="related" template="Create a PR from fork: smith-agent github --org {org} pr create --title <t> --body <b> --branch <head> --base main"]
+    board -> issue_query              [kind="related" template="Query by assignee: smith-agent github --org {org} issue query --by assignee --assignee <username>"]
+    auth_status -> issue_create       [kind="related" template="Create an issue: smith-agent github --org {org} issue create --title <t> --body <b> --kind <epic|story|task|bug>"]
+
+    // ══════════════════════════════════════════════════════════════════
+    // Recovery edges — error recovery
+    // ══════════════════════════════════════════════════════════════════
+
+    status_set -> board               [kind="recovery" failure="status_not_found" template="View available statuses: smith-agent github --org {org} --project {project} board"]
+    status_set -> issue_view          [kind="recovery" failure="issue_not_in_project" template="Verify the issue exists: smith-agent github --org {org} issue view {number}"]
+    status_set -> status_set          [kind="recovery" failure="verification_failed" template="Retry: smith-agent github --org {org} --project {project} status set {number} --to {to}"]
+    issue_create -> issue_query       [kind="recovery" failure="issue_type_not_found" template="Available kinds: epic, story, task, bug. Check: smith-agent github --org {org} issue query --by issue-type --label Epic"]
+    issue_create -> issue_view        [kind="recovery" failure="parent_not_found" template="Verify parent: smith-agent github --org {org} issue view {parent}"]
+    issue_assign -> issue_view        [kind="recovery" failure="user_not_found" template="Check assignees: smith-agent github --org {org} issue view {number}"]
+    auth_status -> auth_status        [kind="recovery" failure="no_credentials" template="Register a GitHub App: smith init"]
+    auth_status -> auth_status        [kind="recovery" failure="token_exchange_failed" template="App may be uninstalled. Re-run: smith init"]
+    mint_token -> auth_status         [kind="recovery" failure="no_credentials" template="Register a GitHub App: smith init"]
+    pr_merge -> pr_view               [kind="recovery" failure="merge_failed" template="Check PR status: smith-agent github --org {org} pr view {pr}"]
+    milestone_assign -> milestone_list [kind="recovery" failure="milestone_not_found" template="List milestones: smith-agent github --org {org} milestone list"]
+}
